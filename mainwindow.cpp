@@ -26,7 +26,6 @@ void MainWindow::saveFile()
 void MainWindow::clearTable()
 {
     ui->logTable->clear();
-
 }
 
 MainWindow::~MainWindow()
