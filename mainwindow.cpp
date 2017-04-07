@@ -1,7 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <QStringList>
+#include <QString>
 #include <QDialog>
+#include <QFile>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -15,7 +16,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
 void MainWindow::openExplorer()
 {
-    QStringList fileNames = QFileDialog::getOpenFileNames(this, tr("Open File"),"/path/to/file/",tr("Text Files (*.txt)"));
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),"/path/to/file/",tr("Text Files (*.txt)"));
+    QFile file(fileName);
 }
 
 void MainWindow::saveFile()

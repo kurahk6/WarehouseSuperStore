@@ -79,7 +79,7 @@
      <string>Name</string>
     </property>
    </widget>
-   <widget class="QPlainTextEdit" name="plainTextEdit">
+   <widget class="QPlainTextEdit" name="id">
     <property name="geometry">
      <rect>
       <x>60</x>
@@ -92,7 +92,7 @@
      <bool>false</bool>
     </property>
    </widget>
-   <widget class="QPlainTextEdit" name="plainTextEdit_2">
+   <widget class="QPlainTextEdit" name="name">
     <property name="enabled">
      <bool>true</bool>
     </property>
@@ -108,107 +108,11 @@
      <bool>false</bool>
     </property>
    </widget>
-   <widget class="QTableWidget" name="logTable">
-    <property name="geometry">
-     <rect>
-      <x>60</x>
-      <y>10</y>
-      <width>661</width>
-      <height>331</height>
-     </rect>
-    </property>
-    <property name="rowCount">
-     <number>10</number>
-    </property>
-    <property name="columnCount">
-     <number>6</number>
-    </property>
-    <row>
-     <property name="text">
-      <string>Sale 1</string>
-     </property>
-    </row>
-    <row>
-     <property name="text">
-      <string>Sale 2</string>
-     </property>
-    </row>
-    <row>
-     <property name="text">
-      <string>Sale 3</string>
-     </property>
-    </row>
-    <row>
-     <property name="text">
-      <string>Sale 4</string>
-     </property>
-    </row>
-    <row>
-     <property name="text">
-      <string>Sale 5</string>
-     </property>
-    </row>
-    <row>
-     <property name="text">
-      <string>Sale 6</string>
-     </property>
-    </row>
-    <row>
-     <property name="text">
-      <string>Sale 7</string>
-     </property>
-    </row>
-    <row>
-     <property name="text">
-      <string>Sale 8</string>
-     </property>
-    </row>
-    <row>
-     <property name="text">
-      <string>Sale 9</string>
-     </property>
-    </row>
-    <row>
-     <property name="text">
-      <string>Sale 10</string>
-     </property>
-    </row>
-    <column>
-     <property name="text">
-      <string>User ID</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Name</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Product</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Amount</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>New Column</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Prefered?</string>
-     </property>
-    </column>
-   </widget>
    <widget class="QPushButton" name="addUser">
     <property name="geometry">
      <rect>
-      <x>150</x>
-      <y>420</y>
+      <x>310</x>
+      <y>410</y>
       <width>75</width>
       <height>23</height>
      </rect>
@@ -217,6 +121,181 @@
      <string>Add User</string>
     </property>
    </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>150</x>
+      <y>380</y>
+      <width>51</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Exp. Date</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_4">
+    <property name="geometry">
+     <rect>
+      <x>150</x>
+      <y>420</y>
+      <width>51</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Prefered?</string>
+    </property>
+   </widget>
+   <widget class="QPlainTextEdit" name="expiration_date">
+    <property name="geometry">
+     <rect>
+      <x>210</x>
+      <y>380</y>
+      <width>81</width>
+      <height>31</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QTabWidget" name="tabWidget">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>821</width>
+      <height>501</height>
+     </rect>
+    </property>
+    <property name="currentIndex">
+     <number>1</number>
+    </property>
+    <widget class="QWidget" name="tab">
+     <attribute name="title">
+      <string>Tab 1</string>
+     </attribute>
+     <widget class="QTableWidget" name="logTable">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>10</y>
+        <width>711</width>
+        <height>331</height>
+       </rect>
+      </property>
+      <property name="rowCount">
+       <number>0</number>
+      </property>
+      <property name="columnCount">
+       <number>7</number>
+      </property>
+      <column>
+       <property name="text">
+        <string>User ID</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Name</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Product</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Amount</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Sales Price</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Date</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Prefered?</string>
+       </property>
+      </column>
+     </widget>
+     <zorder>logTable</zorder>
+     <zorder>logTable</zorder>
+    </widget>
+    <widget class="QWidget" name="tab_2">
+     <attribute name="title">
+      <string>Tab 2</string>
+     </attribute>
+     <widget class="QTableWidget" name="logTable_2">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>10</y>
+        <width>711</width>
+        <height>331</height>
+       </rect>
+      </property>
+      <property name="rowCount">
+       <number>1</number>
+      </property>
+      <property name="columnCount">
+       <number>6</number>
+      </property>
+      <row>
+       <property name="text">
+        <string>Sales 1</string>
+       </property>
+      </row>
+      <column>
+       <property name="text">
+        <string>User ID</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Name</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Total Sales</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Rebate</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Expires</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Prefered?</string>
+       </property>
+      </column>
+     </widget>
+    </widget>
+   </widget>
+   <zorder>tabWidget</zorder>
+   <zorder>newLog</zorder>
+   <zorder>addLog</zorder>
+   <zorder>saveLog</zorder>
+   <zorder>label</zorder>
+   <zorder>label_2</zorder>
+   <zorder>id</zorder>
+   <zorder>name</zorder>
+   <zorder>addUser</zorder>
+   <zorder>label_3</zorder>
+   <zorder>label_4</zorder>
+   <zorder>expiration_date</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
