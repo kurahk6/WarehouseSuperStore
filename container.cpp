@@ -8,6 +8,8 @@ Container::Container()
 }
 
 Container::Container(std::string file_name){
+
+
      std::ifstream file;
      file.open(file_name.c_str());
      assert(file.is_open());
@@ -38,16 +40,31 @@ Container::Container(std::string file_name){
             temp->member.is_preferred=false;
          else
              temp->member.is_preferred=true;
+
          std::getline(file,input);
-         input.erase(3);
-         input.erase(6);
+
+
+         input.erase(2,1);
+
+         input.erase(4,1);
+
          std::stringstream ss2(input);
          ss2>>temp->member.exp_date;
+        if(iterator != NULL)
+             iterator->next=temp;
 
-         iterator->next=temp;
-         iterator=temp;
+             iterator=temp;
+
 
      }
+tail=iterator;
 
+}
 
+void Container::print(){
+    Membership_node* temp=head;
+    while(temp!=NULL){
+        std::cout<<"Name: " << temp->member.name << std::endl;
+        temp=temp->next;
+    }
 }

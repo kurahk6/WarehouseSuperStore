@@ -36,6 +36,7 @@ class Container
 public:
     Container();
     Container(std::string file_name);
+    void print();
 
 private:
     Membership_node* head;
