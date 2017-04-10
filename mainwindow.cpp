@@ -26,7 +26,12 @@ MainWindow::MainWindow(QWidget *parent) :
     signalMapper->setMapping(ui->newProfile, "newProfile");
     connect(signalMapper, SIGNAL(mapped(QString)), this, SLOT(onAction(QString)));
     connect(ui->addUser, SIGNAL(clicked()), this, SLOT(addUser()));
-
+    ui->SaleLogs->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    ui->UserLogs->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    ui->SaleLogs->horizontalHeader()->setSectionResizeMode(QHeaderView::Fixed);
+    ui->UserLogs->horizontalHeader()->setSectionResizeMode(QHeaderView::Fixed);
+    ui->SaleLogs->verticalHeader()->setSectionResizeMode(QHeaderView::Fixed);
+    ui->UserLogs->verticalHeader()->setSectionResizeMode(QHeaderView::Fixed);
 }
 
 void MainWindow::onAction(QString action)
@@ -60,16 +65,26 @@ void MainWindow::openFile(QString currentTab)
         else if(currentTab == "addLog")
         {
             Container_sales sales(fileNameString);
-                std::cout<<"WHAT THE FUCK"<<std::endl;
-            int *quantities = sales.getQuantities(), *IDs = sales.getMemberID();
-                std::cout<<"WHAT THE FUCK"<<std::endl;
+            int *quantities = sales.getQuantities(), *IDs = sales.getMemberID(),*dates = sales.getDatesPurchased();
+            double *prices = sales.getPrices();
             std::string *items = sales.getItemList();
-                std::cout<<"WHAT THE FUCK"<<std::endl;
             for(int i = 0; i < sales.list_size(); i++)
             {
-                int k = 1;
+                int k = 0;
+                QString temp;
+                temp = QString::number(dates[i-1]);
+                temp.insert(2, "/");
+                temp.insert(4,"/");
                 ui->SaleLogs->setRowCount(i);
-                ui->SaleLogs->setItem(i,k,new QTableWidgetItem(QString::number(quantities[k-1])));
+                ui->SaleLogs->setItem(i-1,k,new QTableWidgetItem(QString::number(IDs[i-1])));
+                k++;
+                ui->SaleLogs->setItem(i-1,k,new QTableWidgetItem(QString::number(quantities[i-1])));
+                k++;
+                ui->SaleLogs->setItem(i-1,k,new QTableWidgetItem(QString::fromStdString(items[i-1])));
+                k++;
+                ui->SaleLogs->setItem(i-1,k,new QTableWidgetItem(QString::number(prices[i-1])));
+                k++;
+                ui->SaleLogs->setItem(i-1,k,new QTableWidgetItem(temp));
             }
         }
     }
@@ -82,9 +97,9 @@ void MainWindow::saveFile(QString currentTab)
 
 void MainWindow::clearTable(QString tableName)
 {
-    if(tableName == "SaleLogs")
+    if(tableName == "newLog")
         ui->SaleLogs->setRowCount(0);
-    else if (tableName == "UserLogs")
+    else if (tableName == "newProfile")
         ui->UserLogs->setRowCount(0);
 }
 

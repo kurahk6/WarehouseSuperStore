@@ -16,51 +16,45 @@ Container_sales::Container_sales(std::string file_name){
     head=new manifest_entry_node;
     iterator=NULL;
 
-
+int isEOF = 0;
     std::string input;
-    while(!file.eof()){
+    while(isEOF != EOF){
         manifest_entry_node* temp=head;
         if(iterator != NULL)
             temp=new manifest_entry_node;
         std::getline(file,input);
-
-
+        std::stringstream ss;
 
         input.erase(2,1);
 
         input.erase(4,1);
 
-        std::stringstream ss2(input);
-        ss2>>temp->entry.date_purchased;
+        ss<<input;
+        ss>>temp->entry.date_purchased;
+        ss.clear();
 
         std::getline(file,input);
 
-        std::stringstream ss(input);
-
+        ss<<input;
         ss>>temp->entry.membership_id;
+        ss.clear();
 
         std::getline(file,input);
         temp->entry.item_name=input;
 
-        file>>input;
-        std::stringstream ss3(input);
-        ss3>>temp->entry.price;
+        std::getline(file,input);
 
-        file>>input;
-        std::stringstream ss4(input);
-        ss4>>temp->entry.quantity;
-
-
-        getline(file,input);
-
+        ss<<input;
+        ss>>temp->entry.price;
+        ss>>temp->entry.quantity;
+        ss.clear();
 
 
        if(iterator != NULL)
             iterator->next=temp;
 
-            iterator=temp;
-
-
+        iterator=temp;
+        isEOF = file.peek();
     }
 tail=iterator;
 file.close();
@@ -92,6 +86,30 @@ std::string* Container_sales::getItemList(){
        temp=temp->next;
     }
     return item_list;
+}
+
+double* Container_sales::getPrices()
+{
+    manifest_entry_node* temp=head;
+    int index=0;
+    double* price_list=new double[list_size()];
+    while(temp!=NULL){
+        price_list[index++]=temp->entry.price;
+       temp=temp->next;
+    }
+    return price_list;
+}
+
+int* Container_sales::getDatesPurchased()
+{
+    manifest_entry_node* temp=head;
+    int index=0;
+    int* date_list=new int[list_size()];
+    while(temp!=NULL){
+        date_list[index++]=temp->entry.date_purchased;
+       temp=temp->next;
+    }
+    return date_list;
 }
 
 int* Container_sales::getQuantities(){
