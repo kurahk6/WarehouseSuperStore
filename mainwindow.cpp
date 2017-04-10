@@ -3,14 +3,17 @@
 #include <QStringList>
 #include <QDialog>
 
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+
     ui->setupUi(this);
     connect(ui->addLog, SIGNAL(clicked()), this, SLOT(openExplorer()));
     connect(ui->saveLog, SIGNAL(clicked()), this, SLOT(saveFile()));
     connect(ui->newLog, SIGNAL(clicked()), this, SLOT(clearTable()));
+//    connect(ui->logTable)
 }
 
 void MainWindow::openExplorer()
@@ -25,9 +28,13 @@ void MainWindow::saveFile()
 
 void MainWindow::clearTable()
 {
-    ui->logTable->clear();
+//    ui->logTable->clear();
 }
-
+void MainWindow::setSourceModel(QAbstractItemModel *model)
+{
+    proxyModel->setSourceModel(model);
+    sourceView->setModel(model);
+}
 MainWindow::~MainWindow()
 {
     delete ui;

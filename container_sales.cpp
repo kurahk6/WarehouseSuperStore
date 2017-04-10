@@ -3,6 +3,7 @@
 #include "assert.h"
 #include "string"
 #include "iostream"
+
 Container_sales::Container_sales()
 {
 
@@ -126,4 +127,149 @@ int* Container_sales::getMemberID(){
        temp=temp->next;
     }
     return memberid;
+}
+
+double Container_sales::getTotalPurchased(int memberid){
+    manifest_entry_node* temp=head;
+    double total=0.0;
+    while(temp!=NULL){
+        if(temp->entry.membership_id==memberid)
+                total=total+(temp->entry.price*(double)temp->entry.quantity);
+       temp=temp->next;
+    }
+
+    return total;
+}
+
+int Container_sales::getSpecificQSold(std::string item_name){
+    manifest_entry_node* temp=head;
+    int total=0;
+    while(temp!=NULL){
+        if(temp->entry.item_name==item_name)
+                total=total+((double)temp->entry.quantity);
+       temp=temp->next;
+    }
+
+    return total;
+}
+
+double Container_sales::getSpecificRev(std::string item_name){
+    manifest_entry_node* temp=head;
+    double total=0.0;
+    while(temp!=NULL){
+        if(temp->entry.item_name==item_name)
+                total=total+(temp->entry.price*(double)temp->entry.quantity);
+       temp=temp->next;
+    }
+
+    return total;
+}
+
+std::string* Container_sales::itemSort(){
+    std::string* sorted=new std::string[this->list_size()+1];
+    for(int i=0; i<list_size()+1; i++){
+        sorted[i]=" ";
+    }
+    int arr_size=list_size();
+    int arr_size_adj=0;
+    manifest_entry_node* temp=head;
+
+    while(temp!=NULL){
+        manifest_entry_node* temp2=head;
+        int total=1;
+        while(temp2!=NULL){
+        if(temp->entry.item_name>temp2->entry.item_name)
+                total++;
+       temp2=temp2->next;
+        }
+       sorted[total]=temp->entry.item_name;
+       temp=temp->next;
+    }
+
+
+
+    for(int i=1; i<arr_size+1;i++){
+        if(sorted[i]==" "){
+            for(int j=i; j<arr_size; j++){
+               sorted[j]=sorted[j+1];
+            }
+            i--;
+            arr_size_adj++;
+        }
+
+}
+    std::ostringstream os;
+    os<<(arr_size+1-arr_size_adj);
+
+    sorted[0]=os.str();
+    return sorted;
+
+}
+
+int* Container_sales::memIDSort(){
+    int* sorted=new int[list_size()+1];
+    for(int i=0; i<list_size()+1; i++){
+        sorted[i]=-1;
+    }
+
+    int arr_size=list_size();
+    int arr_size_adj=0;
+    manifest_entry_node* temp=head;
+
+    while(temp!=NULL){
+        manifest_entry_node* temp2=head;
+        int total=1;
+        while(temp2!=NULL){
+        if(temp->entry.membership_id>temp2->entry.membership_id)
+                total++;
+       temp2=temp2->next;
+        }
+       sorted[total]=temp->entry.membership_id;
+       temp=temp->next;
+    }
+
+    for(int i=1; i<list_size()+1;i++){
+        if(sorted[i]==-1){
+            for(int j=i; j<list_size()+1; j++){
+               sorted[j]=sorted[j+1];
+            }
+            i--;
+            arr_size_adj++;
+        }
+
+
+}
+
+    sorted[0]=arr_size+1-arr_size_adj;
+    return sorted;
+}
+
+double Container_sales::getTotSpentBy(int ID){
+    manifest_entry_node* temp=head;
+    double total=0.0;
+    while(temp!=NULL){
+        if(temp->entry.membership_id==ID)
+            total=total+(temp->entry.price*(double)temp->entry.quantity);
+       temp=temp->next;
+    }
+
+    return total;
+}
+
+double Container_sales::rebate(int ID){
+    return (REBATE_PERCENTAGE*getTotSpentBy(ID));
+}
+
+bool Container_sales::basic2pref(int ID){
+    if(rebate(ID)>15)
+        return true;
+    else
+        return false;
+}
+
+bool Container_sales::pref2basic(int ID){
+    if(rebate(ID)<15)
+        return true;
+    else
+        return false;
 }
