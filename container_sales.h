@@ -26,8 +26,10 @@ public:
     void print();
     std::string* getItemList();
     int* getQuantities();
+    double* getPrices();
     double getTotalRev();
     int* getMemberID();
+    int *getDatesPurchased();
     double getTotalPurchased(int);
     int getSpecificQSold(std::string);
     double getSpecificRev(std::string);
@@ -37,8 +39,10 @@ public:
     double rebate(int);
     bool basic2pref(int);
     bool pref2basic(int);
-
     int list_size();
+    void add_sale(int date_purchased, int membership_id, std::string item_name, double price, int quantity);
+    void operator=(const Container_sales&);
+    Container_sales operator+(const Container_sales&);
 
 private:
     manifest_entry_node* head;

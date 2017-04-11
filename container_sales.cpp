@@ -6,6 +6,8 @@
 
 Container_sales::Container_sales()
 {
+   tail=NULL;
+   head=tail;
 
 }
 
@@ -16,56 +18,48 @@ Container_sales::Container_sales(std::string file_name){
     head=new manifest_entry_node;
     iterator=NULL;
 
-
+int isEOF = 0;
     std::string input;
-
-    while(!file.eof()){
+    while(isEOF != EOF){
         manifest_entry_node* temp=head;
         if(iterator != NULL)
             temp=new manifest_entry_node;
-
         std::getline(file,input);
-
-
+        std::stringstream ss;
 
         input.erase(2,1);
 
         input.erase(4,1);
 
-        std::stringstream ss2(input);
-        ss2>>temp->entry.date_purchased;
+        ss<<input;
+        ss>>temp->entry.date_purchased;
+        ss.clear();
 
         std::getline(file,input);
 
-        std::stringstream ss(input);
-
+        ss<<input;
         ss>>temp->entry.membership_id;
+        ss.clear();
 
         std::getline(file,input);
         temp->entry.item_name=input;
 
-        file>>input;
-        std::stringstream ss3(input);
-        ss3>>temp->entry.price;
+        std::getline(file,input);
 
-        file>>input;
-        std::stringstream ss4(input);
-        ss4>>temp->entry.quantity;
-
-
-        getline(file,input);
-
+        ss<<input;
+        ss>>temp->entry.price;
+        ss>>temp->entry.quantity;
+        ss.clear();
 
 
        if(iterator != NULL)
             iterator->next=temp;
 
-            iterator=temp;
-
-
+        iterator=temp;
+        isEOF = file.peek();
     }
 tail=iterator;
-
+file.close();
 }
 void Container_sales::print(){
     manifest_entry_node* temp=head;
@@ -94,6 +88,32 @@ std::string* Container_sales::getItemList(){
        temp=temp->next;
     }
     return item_list;
+}
+
+double* Container_sales::getPrices()
+{
+    manifest_entry_node* temp=head;
+    int index=1;
+    double* price_list=new double[list_size()+1];
+    while(temp!=NULL){
+        price_list[index++]=temp->entry.price;
+       temp=temp->next;
+    }
+    price_list[0]=list_size()+1;
+    return price_list;
+}
+
+int* Container_sales::getDatesPurchased()
+{
+    manifest_entry_node* temp=head;
+    int index=1;
+    int* date_list=new int[list_size()];
+    while(temp!=NULL){
+        date_list[index++]=temp->entry.date_purchased;
+       temp=temp->next;
+    }
+    date_list[0]=list_size()+1;
+    return date_list;
 }
 
 int* Container_sales::getQuantities(){
@@ -272,4 +292,54 @@ bool Container_sales::pref2basic(int ID){
         return true;
     else
         return false;
+}
+
+ Container_sales Container_sales::operator+(const Container_sales& b){
+     Container_sales* temp= new Container_sales;
+     *temp=*this;
+     temp->iterator=b.head;
+
+     while(temp->iterator!=NULL){
+
+         temp->add_sale(temp->iterator->entry.date_purchased,temp->iterator->entry.membership_id,temp->iterator->entry.item_name,temp->iterator->entry.price,temp->iterator->entry.quantity);
+            temp->iterator=temp->iterator->next;
+     }
+
+
+    return *temp;
+
+}
+
+void Container_sales::operator =(const Container_sales& b){
+    iterator=head;
+    while(this->iterator!=NULL){
+        head=iterator->next;
+        delete iterator;
+        iterator=head;
+    }
+    this->iterator=b.head;
+
+    while(this->iterator!=NULL){
+
+        this->add_sale(this->iterator->entry.date_purchased,this->iterator->entry.membership_id,this->iterator->entry.item_name,this->iterator->entry.price,this->iterator->entry.quantity);
+           this->iterator=this->iterator->next;
+    }
+
+}
+
+void Container_sales::add_sale(int date_purchased, int membership_id, std::string item_name, double price, int quantity){
+    manifest_entry_node* temp=new manifest_entry_node;
+    temp->next=NULL;
+    temp->entry.date_purchased=date_purchased;
+    temp->entry.item_name=item_name;
+    temp->entry.membership_id=membership_id;
+    temp->entry.price=price;
+    temp->entry.quantity=quantity;
+if(this->tail!=NULL)
+    this->tail->next=temp;
+ this->tail=temp;
+    if(this->head==NULL){
+        head=temp;
+    }
+
 }
