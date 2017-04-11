@@ -60,7 +60,31 @@ void MainWindow::openFile(QString currentTab)
     {
         if(currentTab == "addProfile")
         {
-             Container users(fileNameString);
+            Container profile(fileNameString);
+            int *IDs = profile.getMemberID(),*dates = profile.get_exp();
+            std::string *names = profile.get_name();
+            bool *isPrefered = profile.getis_pref();
+            if(ui->UserLogs->rowCount() != 0 )
+                ui->UserLogs->setRowCount(0);
+            ui->UserLogs->setRowCount(profile.list_size());
+            for(int i = 0; i < profile.list_size(); i++)
+            {
+                int k = 0;
+                QString temp;
+                temp = QString::number(dates[i]);
+                temp.insert(2, "/");
+                temp.insert(4,"/");
+                ui->UserLogs->setItem(i,k,new QTableWidgetItem(QString::number(IDs[i])));
+                k++;
+                ui->UserLogs->setItem(i,k,new QTableWidgetItem(QString::fromStdString(names[i])));
+                k+=k+3;
+                ui->UserLogs->setItem(i,k,new QTableWidgetItem(temp));
+                k++;
+                if(isPrefered[i])
+                    ui->UserLogs->setItem(i,k,new QTableWidgetItem("yes"));
+                else
+                    ui->UserLogs->setItem(i,k,new QTableWidgetItem("no"));
+            }
         }
         else if(currentTab == "addLog")
         {
@@ -68,23 +92,25 @@ void MainWindow::openFile(QString currentTab)
             int *quantities = sales.getQuantities(), *IDs = sales.getMemberID(),*dates = sales.getDatesPurchased();
             double *prices = sales.getPrices();
             std::string *items = sales.getItemList();
+            if(ui->SaleLogs->rowCount() != 0 )
+                ui->SaleLogs->setRowCount(0);
+            ui->SaleLogs->setRowCount(sales.list_size());
             for(int i = 0; i < sales.list_size(); i++)
             {
                 int k = 0;
                 QString temp;
-                temp = QString::number(dates[i-1]);
+                temp = QString::number(dates[i]);
                 temp.insert(2, "/");
                 temp.insert(4,"/");
-                ui->SaleLogs->setRowCount(i);
-                ui->SaleLogs->setItem(i-1,k,new QTableWidgetItem(QString::number(IDs[i-1])));
+                ui->SaleLogs->setItem(i,k,new QTableWidgetItem(QString::number(IDs[i])));
                 k++;
-                ui->SaleLogs->setItem(i-1,k,new QTableWidgetItem(QString::number(quantities[i-1])));
+                ui->SaleLogs->setItem(i,k,new QTableWidgetItem(QString::number(quantities[i])));
                 k++;
-                ui->SaleLogs->setItem(i-1,k,new QTableWidgetItem(QString::fromStdString(items[i-1])));
+                ui->SaleLogs->setItem(i,k,new QTableWidgetItem(QString::fromStdString(items[i])));
                 k++;
-                ui->SaleLogs->setItem(i-1,k,new QTableWidgetItem(QString::number(prices[i-1])));
+                ui->SaleLogs->setItem(i,k,new QTableWidgetItem(QString::number(prices[i])));
                 k++;
-                ui->SaleLogs->setItem(i-1,k,new QTableWidgetItem(temp));
+                ui->SaleLogs->setItem(i,k,new QTableWidgetItem(temp));
             }
         }
     }
