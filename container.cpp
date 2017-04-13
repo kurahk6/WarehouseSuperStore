@@ -30,7 +30,6 @@ Container::Container(std::string file_name){
          temp->member.name=input;
 
          std::getline(file,input);
-
          std::stringstream ss(input);
 
          ss>>temp->member.membership_id;
@@ -48,17 +47,16 @@ Container::Container(std::string file_name){
          input.erase(2,1);
 
          input.erase(4,1);
+         temp->member.exp_date=input;
 
-         std::stringstream ss2(input);
-         ss2>>temp->member.exp_date;
-        if(iterator != NULL)
+         if(iterator != NULL)
              iterator->next=temp;
 
-             iterator=temp;
-             isEOF = file.peek();
+         iterator=temp;
+         isEOF = file.peek();
      }
 tail=iterator;
-
+file.close();
 }
 
 void Container::print(){
@@ -183,10 +181,12 @@ os<<(arr_size+1);
 
 int* Container::showExpiringMem(int month){
     int* list=new int[list_size()+1];
-    int index=1;
+    int index=1, date=0;
     Membership_node* temp=head;
     while(temp!=NULL){
-        if(temp->member.exp_date/1000000 == month)
+        std::stringstream ss(temp->member.exp_date);
+        ss>>date;
+        if(date/1000000 == month)
             list[index++]=temp->member.membership_id;
         temp=temp->next;
     }
@@ -251,8 +251,8 @@ int* Container::getMemberID(){
     return IDs;
 }
 
-int* Container::get_exp(){
-    int* exps=new int[list_size()+1];
+std::string* Container::get_exp(){
+    std::string* exps=new std::string[list_size()+1];
     Membership_node* temp=head;
     int index=1;
     while(temp!=NULL){
@@ -270,7 +270,7 @@ bool* Container::getis_pref(){
     Membership_node* temp=head;
     int index=1;
     while(temp!=NULL){
-        pref[index++]=temp->member.exp_date;
+        pref[index++]=temp->member.is_preferred;
         temp=temp->next;
     }
 

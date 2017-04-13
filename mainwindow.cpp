@@ -61,29 +61,29 @@ void MainWindow::openFile(QString currentTab)
         if(currentTab == "addProfile")
         {
             Container profile(fileNameString);
-            int *IDs = profile.getMemberID(),*dates = profile.get_exp();
-            std::string *names = profile.get_name();
+            int *IDs = profile.getMemberID();
+            std::string *names = profile.get_name(), *dates = profile.get_exp();
             bool *isPrefered = profile.getis_pref();
             if(ui->UserLogs->rowCount() != 0 )
                 ui->UserLogs->setRowCount(0);
             ui->UserLogs->setRowCount(profile.list_size());
-            for(int i = 0; i < profile.list_size(); i++)
+            for(int i = 0; i < profile.list_size()+1; i++)
             {
                 int k = 0;
                 QString temp;
-                temp = QString::number(dates[i]);
+                temp = QString::fromStdString(dates[i]);
                 temp.insert(2, "/");
-                temp.insert(4,"/");
-                ui->UserLogs->setItem(i,k,new QTableWidgetItem(QString::number(IDs[i])));
+                temp.insert(5,"/");
+                ui->UserLogs->setItem(i-1,k,new QTableWidgetItem(QString::number(IDs[i])));
                 k++;
-                ui->UserLogs->setItem(i,k,new QTableWidgetItem(QString::fromStdString(names[i])));
-                k+=k+3;
-                ui->UserLogs->setItem(i,k,new QTableWidgetItem(temp));
+                ui->UserLogs->setItem(i-1,k,new QTableWidgetItem(QString::fromStdString(names[i])));
+                k+=3;
+                ui->UserLogs->setItem(i-1,k,new QTableWidgetItem(temp));
                 k++;
                 if(isPrefered[i])
-                    ui->UserLogs->setItem(i,k,new QTableWidgetItem("yes"));
+                    ui->UserLogs->setItem(i-1,k,new QTableWidgetItem("yes"));
                 else
-                    ui->UserLogs->setItem(i,k,new QTableWidgetItem("no"));
+                    ui->UserLogs->setItem(i-1,k,new QTableWidgetItem("no"));
             }
         }
         else if(currentTab == "addLog")
@@ -101,7 +101,7 @@ void MainWindow::openFile(QString currentTab)
                 QString temp;
                 temp = QString::number(dates[i]);
                 temp.insert(2, "/");
-                temp.insert(4,"/");
+                temp.insert(5,"/");
                 ui->SaleLogs->setItem(i,k,new QTableWidgetItem(QString::number(IDs[i])));
                 k++;
                 ui->SaleLogs->setItem(i,k,new QTableWidgetItem(QString::number(quantities[i])));
