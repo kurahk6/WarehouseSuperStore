@@ -289,3 +289,55 @@ bool Container_sales::pref2basic(int ID){
     else
         return false;
 }
+
+
+Container_sales Container_sales::operator+(const Container_sales& b){
+    Container_sales* temp= new Container_sales;
+    *temp=*this;
+    temp->iterator=b.head;
+
+    while(temp->iterator!=NULL){
+
+        temp->add_sale(temp->iterator->entry.date_purchased,temp->iterator->entry.membership_id,temp->iterator->entry.item_name,temp->iterator->entry.price,temp->iterator->entry.quantity);
+           temp->iterator=temp->iterator->next;
+    }
+
+
+   return *temp;
+
+}
+
+void Container_sales::operator =(const Container_sales& b){
+   iterator=head;
+   while(this->iterator!=NULL){
+       head=iterator->next;
+       delete iterator;
+       iterator=head;
+   }
+   this->iterator=b.head;
+
+   while(this->iterator!=NULL){
+
+       this->add_sale(this->iterator->entry.date_purchased,this->iterator->entry.membership_id,this->iterator->entry.item_name,this->iterator->entry.price,this->iterator->entry.quantity);
+          this->iterator=this->iterator->next;
+   }
+
+}
+
+void Container_sales::add_sale(int date_purchased, int membership_id, std::string item_name, double price, int quantity){
+   manifest_entry_node* temp=new manifest_entry_node;
+   temp->next=NULL;
+   temp->entry.date_purchased=date_purchased;
+   temp->entry.item_name=item_name;
+   temp->entry.membership_id=membership_id;
+   temp->entry.price=price;
+   temp->entry.quantity=quantity;
+if(this->tail!=NULL)
+   this->tail->next=temp;
+this->tail=temp;
+   if(this->head==NULL){
+       head=temp;
+   }
+
+}
+
