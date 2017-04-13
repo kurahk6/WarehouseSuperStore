@@ -89,9 +89,9 @@ void MainWindow::openFile(QString currentTab)
         else if(currentTab == "addLog")
         {
             Container_sales sales(fileNameString);
-            int *quantities = sales.getQuantities(), *IDs = sales.getMemberID(),*dates = sales.getDatesPurchased();
+            int *quantities = sales.getQuantities(), *IDs = sales.getMemberID();
             double *prices = sales.getPrices();
-            std::string *items = sales.getItemList();
+            std::string *items = sales.getItemList(), *dates = sales.getDatesPurchased();
             if(ui->SaleLogs->rowCount() != 0 )
                 ui->SaleLogs->setRowCount(0);
             ui->SaleLogs->setRowCount(sales.list_size());
@@ -99,7 +99,7 @@ void MainWindow::openFile(QString currentTab)
             {
                 int k = 0;
                 QString temp;
-                temp = QString::number(dates[i]);
+                temp = QString::fromStdString(dates[i]);
                 temp.insert(2, "/");
                 temp.insert(5,"/");
                 ui->SaleLogs->setItem(i,k,new QTableWidgetItem(QString::number(IDs[i])));

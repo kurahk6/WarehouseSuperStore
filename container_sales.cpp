@@ -100,11 +100,11 @@ double* Container_sales::getPrices()
     return price_list;
 }
 
-int* Container_sales::getDatesPurchased()
+std::string* Container_sales::getDatesPurchased()
 {
     manifest_entry_node* temp=head;
     int index=0;
-    int* date_list=new int[list_size()];
+    std::string* date_list=new std::string[list_size()];
     while(temp!=NULL){
         date_list[index++]=temp->entry.date_purchased;
        temp=temp->next;

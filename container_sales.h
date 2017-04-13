@@ -5,7 +5,7 @@
 const double REBATE_PERCENTAGE=0.05;
 struct manifest_entry
 {
-    int date_purchased;
+    std::string date_purchased;
     int membership_id;
     std::string item_name;
     double price;
@@ -29,7 +29,7 @@ public:
     double* getPrices();
     double getTotalRev();
     int* getMemberID();
-    int *getDatesPurchased();
+    std::string *getDatesPurchased();
     double getTotalPurchased(int);
     int getSpecificQSold(std::string);
     double getSpecificRev(std::string);
