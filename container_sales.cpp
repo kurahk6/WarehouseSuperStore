@@ -324,7 +324,7 @@ void Container_sales::operator =(const Container_sales& b){
 
 }
 
-void Container_sales::add_sale(int date_purchased, int membership_id, std::string item_name, double price, int quantity){
+void Container_sales::add_sale(std::string date_purchased, int membership_id, std::string item_name, double price, int quantity){
    manifest_entry_node* temp=new manifest_entry_node;
    temp->next=NULL;
    temp->entry.date_purchased=date_purchased;
