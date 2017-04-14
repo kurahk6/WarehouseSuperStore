@@ -26,8 +26,9 @@ public:
     std::string* get_name();
     int* getMemberID();
     bool* getis_pref();
-    std::__cxx11::string *get_exp();
+    std::string *get_exp();
     Container();
+//    ~Container();
     Container(std::string file_name);
     bool isPref(int);
     int NameToID(std::string);
@@ -36,10 +37,13 @@ public:
     int* sortbytype();
     int list_size();
     void print();
+    void nukem();
     std::string* sortbyname();
     int* showExpiringMem(int);
-    void addMember(std::string, int ID, bool isPref, int expdate);
+    void addMember(std::string, int , bool , std::string );
     bool delMember(int);
+    void operator=(const Container&);
+    Container& operator+(const Container&);
 
 
 private:

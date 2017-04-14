@@ -24,7 +24,7 @@ private slots:
     void openFile(QString currentTab);
     void saveFile(QString currentTab);
     void clearTable(QString tableName);
-    void addUser();
+    void addFunction(QString logType);
 
 private:
     Container member;

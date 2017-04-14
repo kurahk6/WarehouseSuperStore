@@ -5,6 +5,8 @@
 #include "iostream"
 Container::Container()
 {
+    head=NULL;
+    tail=head;
 }
 
 Container::Container(std::string file_name){
@@ -57,6 +59,15 @@ Container::Container(std::string file_name){
      }
 tail=iterator;
 file.close();
+}
+
+void Container::nukem(){
+    iterator=head;
+    while(this->iterator!=NULL){
+        head=iterator->next;
+        delete iterator;
+        iterator=head;
+    }
 }
 
 void Container::print(){
@@ -194,16 +205,19 @@ int* Container::showExpiringMem(int month){
     return list;
 }
 
-void Container::addMember(std::string name, int ID, bool isPref, int expdate){
+void Container::addMember(std::string name, int ID, bool isPref, std::string expdate){
     Membership_node* temp=new Membership_node;
+    temp->next=NULL;
     temp->member.exp_date=expdate;
     temp->member.is_preferred=isPref;
     temp->member.membership_id=ID;
     temp->member.name=name;
 
-    tail->next=temp;
-    temp->next=NULL;
-    tail=temp;
+    if(this->tail!=NULL)
+       this->tail->next=temp;
+    this->tail=temp;
+       if(this->head==NULL)
+           head=temp;
 }
 
 bool Container::delMember(int ID){
@@ -278,3 +292,46 @@ bool* Container::getis_pref(){
 
     return pref;
 }
+
+//Container::~Container(){
+//    iterator=head;
+//    while(this->iterator!=NULL){
+//        head=iterator->next;
+//        delete iterator;
+//        iterator=head;
+//    }
+//}
+
+void Container::operator=(const Container& b) {
+    iterator=head;
+    while(this->iterator!=NULL){
+        head=iterator->next;
+        delete iterator;
+        iterator=head;
+    }
+    this->iterator=b.head;
+
+    while(this->iterator!=NULL){
+
+        this->addMember(this->iterator->member.name,this->iterator->member.membership_id,this->iterator->member.is_preferred,this->iterator->member.exp_date);
+           this->iterator=this->iterator->next;
+    }
+}
+
+Container& Container::operator+(const Container& b){
+    Container* temp= new Container;
+    temp=this;
+    temp->iterator=b.head;
+
+    while(temp->iterator!=NULL){
+
+        temp->addMember(temp->iterator->member.name,temp->iterator->member.membership_id,temp->iterator->member.is_preferred,temp->iterator->member.exp_date);
+           temp->iterator=temp->iterator->next;
+    }
+
+
+
+
+   return *temp;
+}
+

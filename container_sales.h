@@ -22,7 +22,9 @@ class Container_sales
 {
 public:
     Container_sales();
+//    ~Container_sales();
     Container_sales(std::string file_name);
+    void nukem();
     void print();
     std::string* getItemList();
     int* getQuantities();
@@ -40,7 +42,7 @@ public:
     bool basic2pref(int);
     bool pref2basic(int);
     int list_size();
-    void add_sale(std::__cxx11::string date_purchased, int membership_id, std::string item_name, double price, int quantity);
+    void add_sale(std::string date_purchased, int membership_id, std::string item_name, double price, int quantity);
     void operator=(const Container_sales&);
     Container_sales operator+(const Container_sales&);
 

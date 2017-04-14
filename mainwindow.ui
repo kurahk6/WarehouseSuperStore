@@ -6,20 +6,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>750</width>
-    <height>471</height>
+    <width>755</width>
+    <height>486</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>745</width>
-    <height>450</height>
+    <width>755</width>
+    <height>486</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>750</width>
-    <height>471</height>
+    <width>755</width>
+    <height>486</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -61,7 +61,7 @@
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
-      <string>Tab 1</string>
+      <string>Sales</string>
      </attribute>
      <widget class="QTableWidget" name="SaleLogs">
       <property name="enabled">
@@ -307,7 +307,7 @@
     </widget>
     <widget class="QWidget" name="tab_2">
      <attribute name="title">
-      <string>Tab 2</string>
+      <string>Members</string>
      </attribute>
      <widget class="QTableWidget" name="UserLogs">
       <property name="enabled">
@@ -536,11 +536,155 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>750</width>
+     <width>755</width>
      <height>21</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuFilter">
+    <property name="title">
+     <string>View</string>
+    </property>
+    <widget class="QMenu" name="menuBy_Month">
+     <property name="title">
+      <string>By Month</string>
+     </property>
+     <addaction name="actionJanuary"/>
+     <addaction name="actionFebruary"/>
+     <addaction name="actionMarch"/>
+     <addaction name="actionApril"/>
+     <addaction name="actionMay"/>
+     <addaction name="actionJune"/>
+     <addaction name="actionJuly"/>
+     <addaction name="actionAugust"/>
+     <addaction name="actionSeptember"/>
+     <addaction name="actionOctober"/>
+     <addaction name="actionNovember"/>
+     <addaction name="actionDecember"/>
+    </widget>
+    <addaction name="menuBy_Month"/>
+   </widget>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <widget class="QMenu" name="menuNew">
+     <property name="title">
+      <string>New</string>
+     </property>
+     <addaction name="actionSales_Log"/>
+     <addaction name="actionMember_Profile"/>
+    </widget>
+    <widget class="QMenu" name="menuOpen">
+     <property name="title">
+      <string>Open</string>
+     </property>
+     <addaction name="actionSales_Log_2"/>
+     <addaction name="actionMember_Profile_2"/>
+    </widget>
+    <widget class="QMenu" name="menuSave">
+     <property name="title">
+      <string>Save</string>
+     </property>
+     <addaction name="actionSales_Log_3"/>
+     <addaction name="actionMember_Profile_3"/>
+    </widget>
+    <addaction name="menuNew"/>
+    <addaction name="menuOpen"/>
+    <addaction name="menuSave"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuFilter"/>
   </widget>
+  <action name="actionJanuary">
+   <property name="text">
+    <string>January</string>
+   </property>
+  </action>
+  <action name="actionFebruary">
+   <property name="text">
+    <string>February</string>
+   </property>
+  </action>
+  <action name="actionMarch">
+   <property name="text">
+    <string>March</string>
+   </property>
+  </action>
+  <action name="actionApril">
+   <property name="text">
+    <string>April</string>
+   </property>
+  </action>
+  <action name="actionMay">
+   <property name="text">
+    <string>May</string>
+   </property>
+  </action>
+  <action name="actionJune">
+   <property name="text">
+    <string>June</string>
+   </property>
+  </action>
+  <action name="actionJuly">
+   <property name="text">
+    <string>July</string>
+   </property>
+  </action>
+  <action name="actionAugust">
+   <property name="text">
+    <string>August</string>
+   </property>
+  </action>
+  <action name="actionSeptember">
+   <property name="text">
+    <string>September</string>
+   </property>
+  </action>
+  <action name="actionOctober">
+   <property name="text">
+    <string>October</string>
+   </property>
+  </action>
+  <action name="actionNovember">
+   <property name="text">
+    <string>November</string>
+   </property>
+  </action>
+  <action name="actionDecember">
+   <property name="text">
+    <string>December</string>
+   </property>
+  </action>
+  <action name="actionSales_Log">
+   <property name="text">
+    <string>Sales Log</string>
+   </property>
+  </action>
+  <action name="actionMember_Profile">
+   <property name="text">
+    <string>Member Profile</string>
+   </property>
+  </action>
+  <action name="actionSales_Log_2">
+   <property name="text">
+    <string>Sales Log</string>
+   </property>
+  </action>
+  <action name="actionMember_Profile_2">
+   <property name="text">
+    <string>Member Profile</string>
+   </property>
+  </action>
+  <action name="actionSales_Log_3">
+   <property name="text">
+    <string>Sales Log</string>
+   </property>
+  </action>
+  <action name="actionMember_Profile_3">
+   <property name="text">
+    <string>Member Profile</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>

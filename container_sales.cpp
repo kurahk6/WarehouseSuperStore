@@ -6,7 +6,8 @@
 
 Container_sales::Container_sales()
 {
-
+    head=NULL;
+    tail=head;
 }
 
 Container_sales::Container_sales(std::string file_name){
@@ -59,6 +60,16 @@ int isEOF = 0;
 tail=iterator;
 file.close();
 }
+
+void Container_sales::nukem(){
+    iterator=head;
+    while(this->iterator!=NULL){
+        head=iterator->next;
+        delete iterator;
+        iterator=head;
+    }
+}
+
 void Container_sales::print(){
     manifest_entry_node* temp=head;
     while(temp!=NULL){
@@ -290,10 +301,18 @@ bool Container_sales::pref2basic(int ID){
         return false;
 }
 
+//Container_sales::~Container_sales(){
+//    iterator=head;
+//    while(this->iterator!=NULL){
+//        head=iterator->next;
+//        delete iterator;
+//        iterator=head;
+//    }
+//}
 
 Container_sales Container_sales::operator+(const Container_sales& b){
     Container_sales* temp= new Container_sales;
-    *temp=*this;
+    temp=this;
     temp->iterator=b.head;
 
     while(temp->iterator!=NULL){
