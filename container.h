@@ -6,28 +6,16 @@
 const double SALES_TAX=0.0875;
 struct Membership
 {
-public:
-    Membership(){
-        name=" ";
-        membership_id=0;
-        is_preferred=false;
-        exp_date=0;
-        total_spent=0;
-        rebate_amount=0;
-    }
-
     std::string name;
     int membership_id;
     bool is_preferred;
-    int exp_date;
+    std::string exp_date;
     double total_spent;
     double rebate_amount;
-
 };
 
 struct Membership_node
 {
-public:
     Membership member;
     Membership_node* next;
 };
@@ -38,8 +26,9 @@ public:
     std::string* get_name();
     int* getMemberID();
     bool* getis_pref();
-    int* get_exp();
+    std::string *get_exp();
     Container();
+    ~Container();
     Container(std::string file_name);
     bool isPref(int);
     int NameToID(std::string);
@@ -50,8 +39,10 @@ public:
     void print();
     std::string* sortbyname();
     int* showExpiringMem(int);
-    void addMember(std::string, int ID, bool isPref, int expdate);
+    void addMember(std::string, int ID, bool isPref, std::string expdate);
     bool delMember(int);
+    void operator=(const Container&);
+    Container& operator+(const Container&);
 
 
 private:

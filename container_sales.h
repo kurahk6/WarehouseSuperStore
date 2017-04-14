@@ -5,7 +5,7 @@
 const double REBATE_PERCENTAGE=0.05;
 struct manifest_entry
 {
-    int date_purchased;
+    std::string date_purchased;
     int membership_id;
     std::string item_name;
     double price;
@@ -22,6 +22,7 @@ class Container_sales
 {
 public:
     Container_sales();
+    ~Container_sales();
     Container_sales(std::string file_name);
     void print();
     std::string* getItemList();
@@ -29,7 +30,7 @@ public:
     double* getPrices();
     double getTotalRev();
     int* getMemberID();
-    int *getDatesPurchased();
+    std::string *getDatesPurchased();
     double getTotalPurchased(int);
     int getSpecificQSold(std::string);
     double getSpecificRev(std::string);
@@ -40,9 +41,9 @@ public:
     bool basic2pref(int);
     bool pref2basic(int);
     int list_size();
-    void add_sale(int date_purchased, int membership_id, std::string item_name, double price, int quantity);
+    void add_sale(std::string date_purchased, int membership_id, std::string item_name, double price, int quantity);
     void operator=(const Container_sales&);
-    Container_sales operator+(const Container_sales&);
+    Container_sales& operator+(const Container_sales&);
 
 private:
     manifest_entry_node* head;
