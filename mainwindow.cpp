@@ -5,6 +5,7 @@
 #include <QSignalMapper>
 #include <QString>
 #include <QDialog>
+#include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -85,7 +86,7 @@ void MainWindow::openFile(QString currentTab)
                 temp.insert(5,"/");
                 ui->UserLogs->setItem(i-1,k,new QTableWidgetItem(QString::number(IDs[i])));
                 k++;
-                ui->UserLogs->setItem(i-1,k,new QTableWidgetItem(QString::fromStdString(names[i])));
+                ui->UserLogs->setItem(i-1,k,new QTableWidgetItem(QString::fromStdString(names[i-1])));
                 k+=3;
                 ui->UserLogs->setItem(i-1,k,new QTableWidgetItem(temp));
                 k++;
@@ -149,6 +150,18 @@ void MainWindow::addFunction(QString logType)
 {
     if(logType == "addSale")
     {
+        QString ID = ui->UserIDText->toPlainText(),
+                product = ui->ProductText->toPlainText(),
+                amount = ui->AmountText->toPlainText(),
+                salesPrice = ui->SalesPriceText->toPlainText(),
+                date = ui->DateText->toPlainText();
+        if(member.IDtoName(ID.toInt()) == "INVALID ID")
+        {
+            QMessageBox Msgbox;
+                Msgbox.setText("User Not Found!");
+                Msgbox.exec();
+        }
+
 
     }
     else if(logType == "addUser")

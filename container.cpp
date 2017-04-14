@@ -8,6 +8,25 @@ Container::Container()
     head=NULL;
     tail=head;
 }
+Container::Container(Container& b){
+    head=NULL;
+    tail=head;
+    b.iterator=b.head;
+    this->iterator=this->head;
+    Membership_node* prev=NULL;
+    while(b.iterator!=NULL){
+
+        this->iterator=new Membership_node(*b.iterator);
+        if(head==NULL)
+            head=this->iterator;
+        if(prev != NULL)
+            prev->next=this->iterator;
+        prev=this->iterator;
+        b.iterator=b.iterator->next;
+
+    }
+    tail=this->iterator;
+}
 
 Container::Container(std::string file_name){
 
@@ -68,6 +87,7 @@ void Container::nukem(){
         delete iterator;
         iterator=head;
     }
+    tail=NULL;
 }
 
 void Container::print(){
@@ -99,15 +119,15 @@ int Container::NameToID(std::string name){
 
 std::string Container::IDtoName(int id){
     Membership_node* temp=head;
-    while(temp->member.membership_id != id
-          && temp!=NULL){
-        temp=temp->next;
-    }
-    if(temp!=NULL)
-        return temp->member.name;
-    else
-        return "INVALID ID";
+      while(temp!=NULL){
+          if(temp->member.membership_id==id)
+              return temp->member.name;
+          temp=temp->next;
+      }
+
+          return "INVALID ID";
 }
+
 int Container::list_size(){
     Membership_node* temp=head;
     int counter=0;
@@ -236,17 +256,17 @@ bool Container::delMember(int ID){
 }
 
 std::string* Container::get_name(){
-    std::string* names=new std::string[list_size()+1];
+    std::string* names=new std::string[list_size()];
     Membership_node* temp=head;
-    int index=1;
+    int index=0;
     while(temp!=NULL){
         names[index++]=temp->member.name;
         temp=temp->next;
     }
 
     std::ostringstream os;
-    os<<index+1;
-    names[0]=os.str();
+//    os<<index+1;
+//    names[0]=os.str();
 
     return names;
 }
@@ -293,14 +313,15 @@ bool* Container::getis_pref(){
     return pref;
 }
 
-//Container::~Container(){
-//    iterator=head;
-//    while(this->iterator!=NULL){
-//        head=iterator->next;
-//        delete iterator;
-//        iterator=head;
-//    }
-//}
+Container::~Container(){
+    iterator=head;
+    while(this->iterator!=NULL){
+        head=iterator->next;
+        delete iterator;
+        iterator=head;
+    }
+    tail=NULL;
+}
 
 void Container::operator=(const Container& b) {
     iterator=head;

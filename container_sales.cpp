@@ -10,6 +10,26 @@ Container_sales::Container_sales()
     tail=head;
 }
 
+Container_sales::Container_sales(Container_sales& b){
+    head=NULL;
+    tail=head;
+    b.iterator=b.head;
+    this->iterator=this->head;
+    manifest_entry_node* prev=NULL;
+    while(b.iterator!=NULL){
+
+        this->iterator=new manifest_entry_node(b.iterator->entry);
+        if(head==NULL)
+            head=this->iterator;
+        if(prev != NULL)
+            prev->next=this->iterator;
+        prev=this->iterator;
+        b.iterator=b.iterator->next;
+
+    }
+    tail=this->iterator;
+}
+
 Container_sales::Container_sales(std::string file_name){
     std::ifstream file;
     file.open(file_name.c_str());
@@ -68,6 +88,7 @@ void Container_sales::nukem(){
         delete iterator;
         iterator=head;
     }
+    tail=NULL;
 }
 
 void Container_sales::print(){
@@ -301,18 +322,21 @@ bool Container_sales::pref2basic(int ID){
         return false;
 }
 
-//Container_sales::~Container_sales(){
-//    iterator=head;
-//    while(this->iterator!=NULL){
-//        head=iterator->next;
-//        delete iterator;
-//        iterator=head;
-//    }
-//}
+Container_sales::~Container_sales(){
+    iterator=head;
+    while(this->iterator!=NULL){
+        head=iterator->next;
+        delete iterator;
+        iterator=head;
+    }
+    tail=NULL;
+    head=tail;
+    iterator=head;
+}
 
-Container_sales Container_sales::operator+(const Container_sales& b){
+Container_sales& Container_sales::operator+(const Container_sales& b){
     Container_sales* temp= new Container_sales;
-    temp=this;
+    *temp=*this;
     temp->iterator=b.head;
 
     while(temp->iterator!=NULL){
@@ -357,6 +381,6 @@ this->tail=temp;
    if(this->head==NULL){
        head=temp;
    }
-
+   delete temp;
 }
 
