@@ -10,6 +10,26 @@ Container_sales::Container_sales()
     tail=head;
 }
 
+Container_sales::Container_sales(Container_sales& b){
+    head=NULL;
+    tail=head;
+    b.iterator=b.head;
+    this->iterator=this->head;
+    manifest_entry_node* prev=NULL;
+    while(b.iterator!=NULL){
+
+        this->iterator=new manifest_entry_node(b.iterator->entry);
+        if(head==NULL)
+            head=this->iterator;
+        if(prev != NULL)
+            prev->next=this->iterator;
+        prev=this->iterator;
+        b.iterator=b.iterator->next;
+
+    }
+    tail=this->iterator;
+}
+
 Container_sales::Container_sales(std::string file_name){
     std::ifstream file;
     file.open(file_name.c_str());
@@ -60,6 +80,17 @@ int isEOF = 0;
 tail=iterator;
 file.close();
 }
+
+void Container_sales::nukem(){
+    iterator=head;
+    while(this->iterator!=NULL){
+        head=iterator->next;
+        delete iterator;
+        iterator=head;
+    }
+    tail=NULL;
+}
+
 void Container_sales::print(){
     manifest_entry_node* temp=head;
     while(temp!=NULL){
@@ -116,7 +147,7 @@ std::string* Container_sales::getDatesPurchased()
 int* Container_sales::getQuantities(){
     manifest_entry_node* temp=head;
     int index=0;
-    int* quantity_list=new int[list_size()+1];
+    int* quantity_list=new int[list_size()];
     while(temp!=NULL){
         quantity_list[index++]=temp->entry.quantity;
        temp=temp->next;
@@ -291,10 +322,21 @@ bool Container_sales::pref2basic(int ID){
         return false;
 }
 
+Container_sales::~Container_sales(){
+    iterator=head;
+    while(this->iterator!=NULL){
+        head=iterator->next;
+        delete iterator;
+        iterator=head;
+    }
+    tail=NULL;
+    head=tail;
+    iterator=head;
+}
 
 Container_sales& Container_sales::operator+(const Container_sales& b){
     Container_sales* temp= new Container_sales;
-    temp=this;
+    *temp=*this;
     temp->iterator=b.head;
 
     while(temp->iterator!=NULL){
@@ -306,14 +348,6 @@ Container_sales& Container_sales::operator+(const Container_sales& b){
 
    return *temp;
 
-}
-Container_sales::~Container_sales(){
-    iterator=head;
-    while(this->iterator!=NULL){
-        head=iterator->next;
-        delete iterator;
-        iterator=head;
-    }
 }
 
 void Container_sales::operator =(const Container_sales& b){

@@ -14,6 +14,24 @@ struct manifest_entry
 
 struct manifest_entry_node
 {
+
+        manifest_entry_node(manifest_entry& b){
+        this->entry.date_purchased=b.date_purchased;
+        this->entry.item_name=b.item_name;
+        this->entry.membership_id=b.membership_id;
+        this->entry.price=b.price;
+        this->entry.quantity=b.quantity;
+        this->next=NULL;
+    }
+        manifest_entry_node(){
+            this->entry.date_purchased="";
+            this->entry.item_name="";
+            this->entry.membership_id=0;
+            this->entry.price=0;
+            this->entry.quantity=0;
+            this->next=NULL;
+        }
+
     manifest_entry entry;
     manifest_entry_node* next;
 };
@@ -22,8 +40,10 @@ class Container_sales
 {
 public:
     Container_sales();
+    Container_sales(Container_sales&);
     ~Container_sales();
     Container_sales(std::string file_name);
+    void nukem();
     void print();
     std::string* getItemList();
     int* getQuantities();

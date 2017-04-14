@@ -8,6 +8,25 @@ Container::Container()
     head=NULL;
     tail=head;
 }
+Container::Container(Container& b){
+    head=NULL;
+    tail=head;
+    b.iterator=b.head;
+    this->iterator=this->head;
+    Membership_node* prev=NULL;
+    while(b.iterator!=NULL){
+
+        this->iterator=new Membership_node(*b.iterator);
+        if(head==NULL)
+            head=this->iterator;
+        if(prev != NULL)
+            prev->next=this->iterator;
+        prev=this->iterator;
+        b.iterator=b.iterator->next;
+
+    }
+    tail=this->iterator;
+}
 
 Container::Container(std::string file_name){
 
@@ -59,6 +78,15 @@ Container::Container(std::string file_name){
      }
 tail=iterator;
 file.close();
+}
+
+void Container::nukem(){
+    iterator=head;
+    while(this->iterator!=NULL){
+        head=iterator->next;
+        delete iterator;
+        iterator=head;
+    }
 }
 
 void Container::print(){
@@ -198,14 +226,17 @@ int* Container::showExpiringMem(int month){
 
 void Container::addMember(std::string name, int ID, bool isPref, std::string expdate){
     Membership_node* temp=new Membership_node;
+    temp->next=NULL;
     temp->member.exp_date=expdate;
     temp->member.is_preferred=isPref;
     temp->member.membership_id=ID;
     temp->member.name=name;
 
-    tail->next=temp;
-    temp->next=NULL;
-    tail=temp;
+    if(this->tail!=NULL)
+       this->tail->next=temp;
+    this->tail=temp;
+       if(this->head==NULL)
+           head=temp;
 }
 
 bool Container::delMember(int ID){
@@ -224,17 +255,17 @@ bool Container::delMember(int ID){
 }
 
 std::string* Container::get_name(){
-    std::string* names=new std::string[list_size()+1];
+    std::string* names=new std::string[list_size()];
     Membership_node* temp=head;
-    int index=1;
+    int index=0;
     while(temp!=NULL){
         names[index++]=temp->member.name;
         temp=temp->next;
     }
 
     std::ostringstream os;
-    os<<index+1;
-    names[0]=os.str();
+//    os<<index+1;
+//    names[0]=os.str();
 
     return names;
 }
@@ -280,6 +311,7 @@ bool* Container::getis_pref(){
 
     return pref;
 }
+
 Container::~Container(){
     iterator=head;
     while(this->iterator!=NULL){
@@ -287,6 +319,7 @@ Container::~Container(){
         delete iterator;
         iterator=head;
     }
+    tail=NULL;
 }
 
 void Container::operator=(const Container& b) {
@@ -321,3 +354,4 @@ Container& Container::operator+(const Container& b){
 
    return *temp;
 }
+

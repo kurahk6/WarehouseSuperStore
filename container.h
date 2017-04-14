@@ -16,6 +16,25 @@ struct Membership
 
 struct Membership_node
 {
+    Membership_node(){
+        this->member.exp_date="";
+        this->member.is_preferred=false;
+        this->member.membership_id=0;
+        this->member.name="";
+        this->member.rebate_amount=0;
+        this->member.total_spent=0;
+        this->next=NULL;
+    }
+    Membership_node(Membership_node& b){
+        this->member.exp_date=b.member.exp_date;
+        this->member.is_preferred=b.member.is_preferred;
+        this->member.membership_id=b.member.membership_id;
+        this->member.name=b.member.name;
+        this->member.rebate_amount=b.member.rebate_amount;
+        this->member.total_spent=b.member.total_spent;
+        this->next=NULL;
+    }
+
     Membership member;
     Membership_node* next;
 };
@@ -28,6 +47,7 @@ public:
     bool* getis_pref();
     std::string *get_exp();
     Container();
+    Container(Container&);
     ~Container();
     Container(std::string file_name);
     bool isPref(int);
@@ -37,9 +57,10 @@ public:
     int* sortbytype();
     int list_size();
     void print();
+    void nukem();
     std::string* sortbyname();
     int* showExpiringMem(int);
-    void addMember(std::string, int ID, bool isPref, std::string expdate);
+    void addMember(std::string, int , bool , std::string );
     bool delMember(int);
     void operator=(const Container&);
     Container& operator+(const Container&);
