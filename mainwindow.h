@@ -20,11 +20,14 @@ public:
     ~MainWindow();  
 
 private slots:
+    void Filter(QString filter);
     void onAction(QString action);
     void openFile(QString currentTab);
     void saveFile(QString currentTab);
     void clearTable(QString tableName);
-    void addUser();
+    void addFunction(QString logType);
+    void search();
+    void generateRevenue();
 
 private:
     Container member;
