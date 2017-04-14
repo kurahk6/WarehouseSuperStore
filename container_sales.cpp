@@ -381,6 +381,6 @@ this->tail=temp;
    if(this->head==NULL){
        head=temp;
    }
-
+   temp=NULL;
 }
 

@@ -87,6 +87,7 @@ void Container::nukem(){
         delete iterator;
         iterator=head;
     }
+    tail=NULL;
 }
 
 void Container::print(){
@@ -118,15 +119,15 @@ int Container::NameToID(std::string name){
 
 std::string Container::IDtoName(int id){
     Membership_node* temp=head;
-    while(temp->member.membership_id != id
-          && temp!=NULL){
-        temp=temp->next;
-    }
-    if(temp!=NULL)
-        return temp->member.name;
-    else
-        return "INVALID ID";
+      while(temp!=NULL){
+          if(temp->member.membership_id==id)
+              return temp->member.name;
+          temp=temp->next;
+      }
+
+          return "INVALID ID";
 }
+
 int Container::list_size(){
     Membership_node* temp=head;
     int counter=0;
